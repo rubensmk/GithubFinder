@@ -51,11 +51,13 @@ const Profile: React.FC = () => {
     });
     api.get(`users/${params.login}/repos`).then(response => {
       setRepositories(response.data);
-      const repositoriesFormmated = response.data.map((repo: any) => ({
-        ...repo,
-        createdDate: format(parseISO(repo.created_at), 'dd-MM-yyyy HH:mm'),
-        pushedDate: format(parseISO(repo.pushed_at), 'dd-MM-yyyy HH:mm'),
-      }));
+      const repositoriesFormmated = response.data.map(
+        (repo: { created_at: string; pushed_at: string }) => ({
+          ...repo,
+          createdDate: format(parseISO(repo.created_at), 'dd-MM-yyyy HH:mm'),
+          pushedDate: format(parseISO(repo.pushed_at), 'dd-MM-yyyy HH:mm'),
+        }),
+      );
       setRepositories(repositoriesFormmated);
     });
   }, [params.login]);
