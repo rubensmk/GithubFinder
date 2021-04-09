@@ -1,96 +1,98 @@
 import React, { FormEvent, useState, useEffect } from 'react';
-import { FiChevronRight } from 'react-icons/fi';
+import { FiChevronRight, FiList } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { Title, Form, Repositories, Error } from './styles';
+import { Title, Form, Profile, Error, Searched } from './styles';
 import api from '../../services/api';
 
-import logoImg from '../../assets/logo.svg';
-
-interface Repository {
-  full_name: string;
-  description: string;
-  owner: {
-    login: string;
-    avatar_url: string;
-  };
+interface Profile {
+  name: string;
+  login: string;
+  id: number;
+  avatar_url: string;
+  location: string;
 }
 
 const Dashbord: React.FC = () => {
-  const [newRepo, setNewRepo] = useState('');
+  const [newProf, setNewProf] = useState('');
   const [inputError, setInputError] = useState('');
-  const [repositories, setRepositories] = useState<Repository[]>(() => {
-    const storageRepositories = localStorage.getItem(
-      '@GithubExplorer:repositories',
-    );
-    if (storageRepositories) {
-      return JSON.parse(storageRepositories);
+  const [currentProfile, setCurrentProfile] = useState<Profile[]>([]);
+  const [profiles, setProfiles] = useState<Profile[]>(() => {
+    const storageProfiles = localStorage.getItem('@GithubFinder:profiles');
+    if (storageProfiles) {
+      return JSON.parse(storageProfiles);
     }
 
     return [];
   });
 
   useEffect(() => {
-    localStorage.setItem(
-      '@GithubExplorer:repositories',
-      JSON.stringify(repositories),
-    );
-  }, [repositories]);
+    localStorage.setItem('@GithubFinder:profiles', JSON.stringify(profiles));
+  }, [profiles]);
 
-  async function handleAddRepository(
+  async function handleAddProfile(
     event: FormEvent<HTMLFormElement>,
   ): Promise<void> {
     event.preventDefault();
-    if (!newRepo) {
-      setInputError('Digite o autor/nome do repositório ');
+    if (!newProf) {
+      setInputError('Digite o nome do perfil do GitHub ');
       return;
     }
     try {
-      const response = await api.get(`repos/${newRepo}`);
+      const response = await api.get(`users/${newProf}`);
 
-      const repository = response.data;
+      const profile = response.data;
+      const current = response.data;
 
-      setRepositories([...repositories, repository]);
-      setNewRepo('');
+      setProfiles([...profiles, profile]);
+      setCurrentProfile([current]);
+      setNewProf('');
       setInputError('');
     } catch (err) {
-      setInputError('Erro na busca por esse repositório');
+      setInputError(
+        'Erro na busca por esse perfil, digite o nome corretamente',
+      );
     }
   }
 
   return (
     <>
-      <img src={logoImg} alt="Github Explorer" />
-      <Title>Explore Repositórios no GitHub</Title>
+      <Searched>
+        <Link to="/searched">
+          <button type="submit">
+            <FiList size={28} />
+          </button>
+        </Link>
+        Histórico de Pesquisas
+      </Searched>
 
-      <Form hasError={!!inputError} onSubmit={handleAddRepository}>
+      <Title>Procure um perfil no GitHub</Title>
+
+      <Form hasError={!!inputError} onSubmit={handleAddProfile}>
         <input
-          value={newRepo}
-          onChange={e => setNewRepo(e.target.value)}
-          placeholder="Digite o nome de repositório"
+          value={newProf}
+          onChange={e => setNewProf(e.target.value)}
+          placeholder="Digite o nome do perfil"
         />
         <button type="submit">Pesquisar</button>
       </Form>
 
       {inputError && <Error>{inputError}</Error>}
 
-      <Repositories>
-        {repositories.map(repository => (
-          <Link
-            key={repository.full_name}
-            to={`/repositories/${repository.full_name}`}
-          >
-            <img
-              src={repository.owner.avatar_url}
-              alt={repository.owner.login}
-            />
-            <div>
-              <strong>{repository.full_name}</strong>
-              <p>{repository.description}</p>
-            </div>
-            <FiChevronRight size={20} />
-          </Link>
-        ))}
-      </Repositories>
+      <Profile>
+        <>
+          {currentProfile.map(current => (
+            <Link key={current.login} to={`/users/${current.login}`}>
+              <img src={current.avatar_url} alt={current.login} />
+              <div>
+                <strong>{current.name}</strong>
+                <p>{current.login}</p>
+                <p>{current.location}</p>
+              </div>
+              <FiChevronRight size={20} />
+            </Link>
+          ))}
+        </>
+      </Profile>
     </>
   );
 };

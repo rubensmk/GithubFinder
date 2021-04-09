@@ -6,13 +6,35 @@ interface FormProps {
   hasError: boolean;
 }
 
+export const Searched = styled.div`
+
+  display:flex;
+  align-items:center;
+
+  button{
+    border: 0;
+    background:transparent;
+
+    svg{
+      color:#f8f8f2;
+      margin-right:7px;
+      transition: 0.2s;
+
+      &:hover{
+        transform: translateX(3px)
+      }
+    }
+  }
+`;
 export const Title = styled.h1`
-  font-size: 48px;
-  color: #3a3a3a;
+  font-size: 36px;
   max-width: 650px;
   line-height: 56px;
 
   margin-top: 80px;
+
+  display:flex;
+
 `;
 
 export const Form = styled.form<FormProps>`
@@ -42,27 +64,36 @@ export const Form = styled.form<FormProps>`
   button {
     width: 210px;
     height: 70px;
-    background: #04d361;
+    background: #59886b;
     border-radius: 0px 5px 5px 0px;
     color: #ffff;
     font-weight: bold;
     transition: background-color 0.2s;
+    border:0;
 
     &:hover {
-      background: ${shade(0.2, `#04D361`)};
+      background: ${shade(0.2, `#59886b`)};
     }
   }
 `;
 
-export const Repositories = styled.div`
+export const Profile = styled.div`
   margin-top: 80px;
-  max-width: 700px;
+  button{
+    border:0;
+    background:transparent;
+    margin-right:20px;
 
+    &:hover{
+      transform:translateY(-5px);
+    }
+  }
   a {
     background: #ffff;
     border-radius: 5px;
-    width: 100%;
-    padding: 24px;
+    width: 700px;
+    height:200px;
+    padding: 20px;
     display: block;
     text-decoration: none;
 
@@ -71,35 +102,31 @@ export const Repositories = styled.div`
     transition: transform 0.2s;
 
     &:hover {
-      transform: translate(10px);
-    }
-
-    & + a {
-      margin-top: 16px;
+      transform: translate(15px);
     }
 
     img {
-      width: 64px;
-      height: 64px;
+      width: 112px;
+      height: 112px;
       border-radius: 50%;
     }
 
     div {
-      margin: 0 16px;
+      margin: 0 24px;
       flex: 1;
 
       strong {
-        font-size: 20px;
+        font-size: 28px;
         color: #3d3d4d;
       }
       p {
-        font-size: 18px;
+        font-size: 20px;
         color: #a8a8d3;
       }
     }
     svg {
       margin-left: auto;
-      color: #cbcbd6;
+      color: #3d3d4d;
     }
   }
 `;
