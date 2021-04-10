@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable react/jsx-indent */
 import React, { FormEvent, useState, useEffect } from 'react';
 import { FiAtSign, FiChevronRight, FiList, FiMapPin } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
@@ -84,14 +86,19 @@ const Dashbord: React.FC = () => {
             <Link key={current.login} to={`/users/${current.login}`}>
               <img src={current.avatar_url} alt={current.login} />
               <div>
-                <strong>{current.name}</strong>
+                {current?.name ? (
+                  <strong>{current.name}</strong>
+                ) : (
+                    <strong>{current.login}</strong>
+                  )}
+
                 <div>
                   <FiAtSign size={14} />
                   <p>{current.login}</p>
                 </div>
                 <div>
                   <FiMapPin size={14} />
-                  <p>{current.location}</p>
+                  {current?.location ? <p>{current?.location}</p> : <p>N/A</p>}
                 </div>
               </div>
               <FiChevronRight size={20} />

@@ -83,7 +83,7 @@ const Profile: React.FC = () => {
             </div>
             <div className="details">
               <FiMapPin size={14} />
-              <p>{profile?.location}</p>
+              {profile?.location ? <p>{profile?.location}</p> : <p>N/A</p>}
             </div>
             <p>ID {profile?.id}</p>
           </div>
