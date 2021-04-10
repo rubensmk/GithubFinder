@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable react/jsx-indent */
 import React, { useEffect, useState } from 'react';
 import { useRouteMatch, Link } from 'react-router-dom';
 import {
@@ -76,7 +78,11 @@ const Profile: React.FC = () => {
         <header>
           <img src={profile?.avatar_url} alt={profile?.login} />
           <div>
-            <strong>{profile?.name}</strong>
+            {profile?.name ? (
+              <strong>{profile.name}</strong>
+            ) : (
+                <strong>{profile?.login}</strong>
+              )}
             <div className="details">
               <FiAtSign size={14} />
               <p>{profile?.login}</p>
