@@ -1,5 +1,5 @@
 import React, { FormEvent, useState, useEffect } from 'react';
-import { FiChevronRight, FiList } from 'react-icons/fi';
+import { FiAtSign, FiChevronRight, FiList, FiMapPin } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { Title, Form, Profile, Error, Searched } from './styles';
 import api from '../../services/api';
@@ -85,8 +85,14 @@ const Dashbord: React.FC = () => {
               <img src={current.avatar_url} alt={current.login} />
               <div>
                 <strong>{current.name}</strong>
-                <p>{current.login}</p>
-                <p>{current.location}</p>
+                <div>
+                  <FiAtSign size={14} />
+                  <p>{current.login}</p>
+                </div>
+                <div>
+                  <FiMapPin size={14} />
+                  <p>{current.location}</p>
+                </div>
               </div>
               <FiChevronRight size={20} />
             </Link>

@@ -114,15 +114,25 @@ export const Profile = styled.div`
     div {
       margin: 0 24px;
       flex: 1;
-
       strong {
         font-size: 28px;
         color: #3d3d4d;
       }
-      p {
+      div{
+        margin:0;
+        display:flex;
+        align-items:center;
+
+        svg{
+          margin:0 7px 0 0;
+          color: #a8a8b3;
+        }
+        p {
         font-size: 20px;
-        color: #a8a8d3;
+        color: #a8a8b3
       }
+      }
+
     }
     svg {
       margin-left: auto;

@@ -15,24 +15,42 @@ export const Header = styled.header`
 
 export const ProfileInfo = styled.section`
   margin-top: 80px;
+
   header {
     display: flex;
     align-items: center;
+
     img {
       width: 120px;
       height: 120px;
       border-radius: 50%;
     }
+
     div {
       margin-left: 24px;
+
       strong {
         font-size: 2rem;
         color: #f8f8f2;
       }
       p {
-        font-size: 18px;
-        color: #f8f8f2;
         margin-top: 4px;
+      }
+
+      div.details {
+        margin: 0;
+        display: flex;
+        align-items: center;
+
+        svg {
+          margin: 0 7px 0 0;
+          color: #f8f8f2;
+        }
+        p {
+          font-size: 18px;
+          color: #f8f8f2;
+          margin-top: 4px;
+        }
       }
     }
   }

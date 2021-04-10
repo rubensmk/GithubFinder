@@ -5,6 +5,8 @@ import {
   FiClock,
   FiExternalLink,
   FiGitCommit,
+  FiAtSign,
+  FiMapPin,
 } from 'react-icons/fi';
 
 import { parseISO, format } from 'date-fns';
@@ -75,9 +77,15 @@ const Profile: React.FC = () => {
           <img src={profile?.avatar_url} alt={profile?.login} />
           <div>
             <strong>{profile?.name}</strong>
-            <p>{profile?.login}</p>
-            <p>{profile?.location}</p>
-            <p>ID: {profile?.id}</p>
+            <div className="details">
+              <FiAtSign size={14} />
+              <p>{profile?.login}</p>
+            </div>
+            <div className="details">
+              <FiMapPin size={14} />
+              <p>{profile?.location}</p>
+            </div>
+            <p>ID {profile?.id}</p>
           </div>
         </header>
         <ul>
