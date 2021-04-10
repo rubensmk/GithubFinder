@@ -27,6 +27,11 @@ export const Profile = styled.div`
       text-decoration: underline;
     }
   }
+  h3 {
+    text-align: center;
+    color: #f8f8f2;
+    margin-top: 3rem;
+  }
   a {
     background: #ffff;
     border-radius: 5px;

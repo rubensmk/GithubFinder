@@ -12,6 +12,7 @@ interface Profile {
 }
 
 const Searched: React.FC = () => {
+  const [empty, setEmpty] = useState('');
   const [profiles, setProfiles] = useState<Profile[]>(() => {
     const storageProfiles = localStorage.getItem('@GithubFinder:profiles');
     if (storageProfiles) {
@@ -21,13 +22,16 @@ const Searched: React.FC = () => {
     return [];
   });
 
-  useEffect(() => {
+  function handleClearAll() {
     localStorage.removeItem('@GithubFinder:profiles');
-  }, [profiles]);
-
-  function handleClearSearched() {
     setProfiles([]);
   }
+
+  useEffect(() => {
+    if (profiles.length === 0) {
+      setEmpty('Histórico de pesquisas vazio.');
+    }
+  }, [profiles]);
   return (
     <>
       <Header>
@@ -38,22 +42,24 @@ const Searched: React.FC = () => {
       </Header>
 
       <Profile>
-        <button type="submit" onClick={handleClearSearched}>
+        <button type="submit" onClick={handleClearAll}>
           Limpar Histórico
         </button>
-        {profiles.map(profile => (
-          <>
-            <Link key={profile.login} to={`/users/${profile.login}`}>
-              <img src={profile.avatar_url} alt={profile.login} />
-              <div>
-                <strong>{profile.name}</strong>
-                <p>{profile.login}</p>
-                <p>{profile.location}</p>
-              </div>
-              <FiChevronRight size={20} />
-            </Link>
-          </>
-        ))}
+        {empty && <h3>{empty}</h3>}
+        {profiles &&
+          profiles.map(profile => (
+            <>
+              <Link key={profile.login} to={`/users/${profile.login}`}>
+                <img src={profile.avatar_url} alt={profile.login} />
+                <div>
+                  <strong>{profile.name}</strong>
+                  <p>{profile.login}</p>
+                  <p>{profile.location}</p>
+                </div>
+                <FiChevronRight size={20} />
+              </Link>
+            </>
+          ))}
       </Profile>
     </>
   );
